@@ -24,26 +24,29 @@ class App {
     }
 
     async getPapers(){
-        let papers = await this.db.getAll("papers");
+        return fetch("/api/papers")
+                    .then(res => res.json()) 
+                    .then(jsonList => jsonList.map(json => new Paper(json)));
+        // let papers = await this.db.getAll("papers");
         
-        if(papers.length === 0){
-            papers = (await (fetch("/json/papers.json").then(res => res.json())))
-                .map(paper => ({
-                    ...paper,
-                    id: parseInt(paper.id),
-                    width_size: parseInt(paper.width_size.replace(/[^0-9]/g, "")),
-                    height_size: parseInt(paper.height_size.replace(/[^0-9]/g, "")),
-                    point: parseInt(paper.point.replace(/[^0-9]/g, "")),
-                    image: "/images/papers/" + paper.image,
-                    hash_tags: paper.hash_tags.map(tag => tag.substr(1))
-                }));
+        // if(papers.length === 0){
+        //     papers = (await (fetch("/json/papers.json").then(res => res.json())))
+        //         .map(paper => ({
+        //             ...paper,
+        //             id: parseInt(paper.id),
+        //             width_size: parseInt(paper.width_size.replace(/[^0-9]/g, "")),
+        //             height_size: parseInt(paper.height_size.replace(/[^0-9]/g, "")),
+        //             point: parseInt(paper.point.replace(/[^0-9]/g, "")),
+        //             image: "/images/papers/" + paper.image,
+        //             hash_tags: paper.hash_tags.map(tag => tag.substr(1))
+        //         }));
 
-            papers.forEach(paper => {
-                this.db.add("papers", paper);
-            });
-        }
+        //     papers.forEach(paper => {
+        //         this.db.add("papers", paper);
+        //     });
+        // }
 
-        return papers.map(paper => new Paper(paper));
+        // return papers.map(paper => new Paper(paper));
     }
 
     update(){
@@ -90,28 +93,28 @@ class App {
             reader.readAsDataURL(file);
         });
 
-        $("#insert-form").on("submit", async e => {
-            e.preventDefault();
+        // $("#insert-form").on("submit", async e => {
+        //     e.preventDefault();
 
-            let paper = Array.from($("#insert-form input[name]"))
-                .reduce((p, c) => {
-                    p[c.name] = c.value;
-                    return p;
-                }, {});
+        //     let paper = Array.from($("#insert-form input[name]"))
+        //         .reduce((p, c) => {
+        //             p[c.name] = c.value;
+        //             return p;
+        //         }, {});
 
-            paper.width_size = parseInt(paper.width_size);
-            paper.height_size = parseInt(paper.height_size);
-            paper.point = parseInt(paper.point);
-            paper.hash_tags = JSON.parse(paper.hash_tags);
+        //     paper.width_size = parseInt(paper.width_size);
+        //     paper.height_size = parseInt(paper.height_size);
+        //     paper.point = parseInt(paper.point);
+        //     paper.hash_tags = JSON.parse(paper.hash_tags);
 
-            paper.id = await this.db.add("papers", paper);
-            this.papers.push(new Paper(paper));
-            this.update();
+        //     paper.id = await this.db.add("papers", paper);
+        //     this.papers.push(new Paper(paper));
+        //     this.update();
 
 
-            $("#insert-form").modal("hide");
-            $("#insert-form input").val('');
-        });
+        //     $("#insert-form").modal("hide");
+        //     $("#insert-form input").val('');
+        // });
 
         $("#store").on("click", ".btn-insert", e => {
             let paper = this.papers.find(paper => paper.id == e.currentTarget.dataset.id);

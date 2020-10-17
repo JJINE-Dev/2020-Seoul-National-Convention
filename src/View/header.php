@@ -9,6 +9,7 @@
     <script src="/bootstrap-4.3.1-dist/js/bootstrap.js"></script>
     <link rel="stylesheet" href="/fontawesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/common.js"></script>
 </head>
 <body>
     <!-- 헤더 영역 -->

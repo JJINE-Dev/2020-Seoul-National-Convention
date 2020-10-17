@@ -5,6 +5,7 @@
     padding: 0;
     box-sizing: border-box;
 }
+[disabled] {pointer-events: none;}
 a, a:hover { text-decoration: none; }
 button, label, a { cursor: pointer; user-select: none; }
 p, label { margin-bottom: 0; }
@@ -122,6 +123,7 @@ button { border: none; background-color: transparent; }
 .cell-30 { flex: 0 0 30%; max-width: 30%; }
 .cell-40 { flex: 0 0 40%; max-width: 40%; }
 .cell-50 { flex: 0 0 50%; max-width: 50%; }
+.cell-60 { flex: 0 0 60%; max-width: 60%; }
 .cell-80 { flex: 0 0 80%; max-width: 80%; }
 .cell-85 { flex: 0 0 85%; max-width: 85%; }
 

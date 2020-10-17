@@ -58,17 +58,28 @@ class App {
 
             let exist = await fetch("/api/users/" + this.user_email).then(res => res.json());
 
-            this.check(
+            this.checkAll(
                 "#user_email",
-               !exist,  //false -> 위에 하나더 ! 있기 때문에 true 로 반환되어서 "이미 사용 중인 이메일입니다 라고 써있음"
-                "이미 사용 중인 이메일입니다."
-            );
+                [
+                    !exist,
+                    /^([a-zA-Z0-9]+)@([a-zA-Z0-9]+\.)+([a-zA-Z]{2,4})$/.test(this.user_email),
+                ],
+                [
+                    "이미 사용 중인 이메일입니다.", 
+                    "올바른 이메일을 입력하세요"
+                ]
+            )
+            // this.check(
+            //     "#user_email",
+            //    !exist,  //false -> 위에 하나더 ! 있기 때문에 true 로 반환되어서 "이미 사용 중인 이메일입니다 라고 써있음"
+            //     "이미 사용 중인 이메일입니다."
+            // );
 
-            this.check(
-                "#user_email",
-                /^([a-zA-Z0-9]+)@([a-zA-Z0-9]+\.)+([a-zA-Z]{2,4})$/.test(this.user_email),
-                "올바른 이메일을 입력하세요."
-            );
+            // this.check(
+            //     "#user_email",
+            //     /^([a-zA-Z0-9]+)@([a-zA-Z0-9]+\.)+([a-zA-Z]{2,4})$/.test(this.user_email),
+            //     "올바른 이메일을 입력하세요."
+            // );
 
             this.check(
                 "#password",

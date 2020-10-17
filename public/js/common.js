@@ -204,3 +204,13 @@ function createCanvas(w, h){
     canvas.height = h;
     return canvas;
 }
+
+window.addEventListener("load", e => {
+    $(".custom-file-input").on("change", e => {
+        let files = e.target.files;
+        let $label = $(e.target).siblings(".custom-file-label");
+        if(files.length == 0) $label.text("파일을 선택해주세요");
+        else if(files.length == 1)$label.text(files[0].name);
+        else $label.text(`${files[0].name}외 ${files.length - 1}개의 파일`);
+    })
+});
